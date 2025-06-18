@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Maths Questions | Admin</title>
+  <link rel="stylesheet" href="css/admin-style.css" />
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 80px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success {
+      margin-top: 15px;
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🧮 Upload Daily Maths Question</h2>
+
+    <label for="question">Question:</label>
+    <textarea id="question" placeholder="Enter the question text here..."></textarea>
+
+    <label for="optA">Option A:</label>
+    <input type="text" id="optA" />
+
+    <label for="optB">Option B:</label>
+    <input type="text" id="optB" />
+
+    <label for="optC">Option C:</label>
+    <input type="text" id="optC" />
+
+    <label for="optD">Option D:</label>
+    <input type="text" id="optD" />
+
+    <label for="correct">Correct Answer:</label>
+    <select id="correct">
+      <option value="">-- Select Correct Option --</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+
+    <label for="explanation">Explanation:</label>
+    <textarea id="explanation" placeholder="Enter solution or explanation here..."></textarea>
+
+    <button onclick="uploadMaths()">📤 Upload Question</button>
+
+    <p class="success" id="msg"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { firebaseConfig } from "../firebase/firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function uploadMaths() {
+      const question = document.getElementById("question").value.trim();
+      const optA = document.getElementById("optA").value.trim();
+      const optB = document.getElementById("optB").value.trim();
+      const optC = document.getElementById("optC").value.trim();
+      const optD = document.getElementById("optD").value.trim();
+      const correct = document.getElementById("correct").value;
+      const explanation = document.getElementById("explanation").value.trim();
+      const msg = document.getElementById("msg");
+
+      if (!question || !optA || !optB || !optC || !optD || !correct || !explanation) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ Please fill all fields.";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "maths_questions"), {
+          question,
+          options: { A: optA, B: optB, C: optC, D: optD },
+          correct,
+          explanation,
+          timestamp: new Date()
+        });
+
+        msg.style.color = "green";
+        msg.innerText = "✅ Question uploaded successfully!";
+
+        document.getElementById("question").value = "";
+        document.getElementById("optA").value = "";
+        document.getElementById("optB").value = "";
+        document.getElementById("optC").value = "";
+        document.getElementById("optD").value = "";
+        document.getElementById("correct").value = "";
+        document.getElementById("explanation").value = "";
+      } catch (err) {
+        console.error("Error uploading:", err);
+        msg.style.color = "red";
+        msg.innerText = "❌ Error uploading. Try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>

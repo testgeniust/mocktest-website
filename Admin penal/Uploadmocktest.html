@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Mock Test | Admin</title>
+  <link rel="stylesheet" href="css/admin-style.css" />
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #007bff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success {
+      margin-top: 15px;
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📘 Upload Mock Test Question</h2>
+
+    <label for="exam">Select Exam:</label>
+    <select id="exam">
+      <option value="">--Select--</option>
+      <option value="ssc">SSC</option>
+      <option value="railway">Railway</option>
+      <option value="bank">Bank</option>
+    </select>
+
+    <label for="paper">Paper Name:</label>
+    <input type="text" id="paper" placeholder="Eg: SSC CHSL Tier-1 Set-1" />
+
+    <label for="question">Question:</label>
+    <textarea id="question" placeholder="Enter question here..."></textarea>
+
+    <label>Options:</label>
+    <input type="text" id="optionA" placeholder="Option A" />
+    <input type="text" id="optionB" placeholder="Option B" />
+    <input type="text" id="optionC" placeholder="Option C" />
+    <input type="text" id="optionD" placeholder="Option D" />
+
+    <label for="correct">Correct Answer:</label>
+    <select id="correct">
+      <option value="">--Select--</option>
+      <option value="A">Option A</option>
+      <option value="B">Option B</option>
+      <option value="C">Option C</option>
+      <option value="D">Option D</option>
+    </select>
+
+    <label for="explanation">Explanation:</label>
+    <textarea id="explanation" placeholder="Write explanation here..."></textarea>
+
+    <button onclick="uploadMockQuestion()">➕ Upload Question</button>
+
+    <p class="success" id="msg"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { firebaseConfig } from "../firebase/firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function uploadMockQuestion() {
+      const exam = document.getElementById("exam").value.trim();
+      const paper = document.getElementById("paper").value.trim();
+      const question = document.getElementById("question").value.trim();
+      const optionA = document.getElementById("optionA").value.trim();
+      const optionB = document.getElementById("optionB").value.trim();
+      const optionC = document.getElementById("optionC").value.trim();
+      const optionD = document.getElementById("optionD").value.trim();
+      const correct = document.getElementById("correct").value.trim();
+      const explanation = document.getElementById("explanation").value.trim();
+      const msg = document.getElementById("msg");
+
+      if (!exam || !paper || !question || !optionA || !optionB || !optionC || !optionD || !correct) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ Please fill all required fields.";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "mocktests", exam, paper), {
+          question,
+          options: { A: optionA, B: optionB, C: optionC, D: optionD },
+          correct,
+          explanation,
+          timestamp: new Date()
+        });
+
+        msg.style.color = "green";
+        msg.innerText = "✅ Question uploaded successfully!";
+        
+        document.getElementById("question").value = "";
+        document.getElementById("optionA").value = "";
+        document.getElementById("optionB").value = "";
+        document.getElementById("optionC").value = "";
+        document.getElementById("optionD").value = "";
+        document.getElementById("correct").value = "";
+        document.getElementById("explanation").value = "";
+      } catch (err) {
+        console.error("Error adding question:", err);
+        msg.style.color = "red";
+        msg.innerText = "❌ Error uploading. Try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>

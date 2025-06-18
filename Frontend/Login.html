@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>🔐 Admin Login</h1>
+  </header>
+
+  <main>
+    <form id="loginForm" class="login-form">
+      <input type="email" id="email" placeholder="Enter Admin Email" required />
+      <input type="password" id="password" placeholder="Enter Password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <p id="loginMessage" style="color: red; font-weight: bold;"></p>
+
+    <a href="index.html" class="nav-button" style="margin-top: 1rem; display: inline-block;">⬅️ Back to Home</a>
+  </main>
+
+  <!-- Firebase Login Script -->
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>

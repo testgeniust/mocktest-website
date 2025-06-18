@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Typing Result</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .result-box {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .back-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 25px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📝 Typing Test Result</h2>
+    <div class="result-box" id="result-box">
+      Calculating your result...
+    </div>
+    <button class="back-btn" onclick="goBack()">Try Again</button>
+  </div>
+
+  <script>
+    function calculateResult(original, typed) {
+      const originalWords = original.trim().split(/\s+/);
+      const typedWords = typed.trim().split(/\s+/);
+
+      let correct = 0;
+      for (let i = 0; i < typedWords.length; i++) {
+        if (typedWords[i] === originalWords[i]) {
+          correct++;
+        }
+      }
+
+      const accuracy = ((correct / originalWords.length) * 100).toFixed(2);
+      const wpm = typedWords.length; // assuming 1 min test
+
+      return { wpm, accuracy, total: typedWords.length };
+    }
+
+    function showResult() {
+      const original = localStorage.getItem("originalText") || "";
+      const typed = localStorage.getItem("userTyped") || "";
+
+      if (!original || !typed) {
+        document.getElementById("result-box").innerHTML = `<p style="color:red;">⚠️ No typing data found. Please complete the test first.</p>`;
+        return;
+      }
+
+      const result = calculateResult(original, typed);
+
+      document.getElementById("result-box").innerHTML = `
+        <p><strong>Total Words Typed:</strong> ${result.total}</p>
+        <p><strong>Accuracy:</strong> <span class="score">${result.accuracy}%</span></p>
+        <p><strong>Typing Speed:</strong> <span class="score">${result.wpm} WPM</span></p>
+      `;
+    }
+
+    function goBack() {
+      window.location.href = "typing-test.html";
+    }
+
+    showResult();
+  </script>
+
+</body>
+</html>

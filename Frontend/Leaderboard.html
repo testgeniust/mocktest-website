@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    .leaderboard-box {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="leaderboard-box">
+    <h2>🏆 Leaderboard</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Time Taken</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <!-- Dynamic leaderboard rows -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Sample data — future: fetch from Firebase
+    const leaderboardData = [
+      { name: "Amit Sharma", score: 182, time: "51:20" },
+      { name: "Priya Verma", score: 176, time: "53:05" },
+      { name: "Rahul Jain", score: 172, time: "59:10" },
+      { name: "Anjali Gupta", score: 168, time: "48:45" },
+      { name: "Ravi Kumar", score: 164, time: "55:30" }
+    ];
+
+    const tbody = document.getElementById("leaderboard-body");
+
+    leaderboardData.forEach((user, index) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${user.name}</td>
+        <td>${user.score}</td>
+        <td>${user.time}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
+    ,

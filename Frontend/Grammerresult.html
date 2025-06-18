@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>व्याकरण परिणाम</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f3f3f3;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .section h3 {
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .btn {
+      margin-top: 30px;
+      display: block;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: #218838;
+    }
+
+    .highlight {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📝 व्याकरण जांच परिणाम</h2>
+
+    <div class="section">
+      <h3>📌 आपकी लिखी हुई पंक्ति:</h3>
+      <p id="typed"></p>
+    </div>
+
+    <div class="section">
+      <h3>🔍 व्याकरणीय त्रुटियाँ:</h3>
+      <p id="grammar-mistakes">Loading...</p>
+    </div>
+
+    <div class="section">
+      <h3>🌐 अंग्रेजी अनुवाद:</h3>
+      <p id="translation">Loading...</p>
+    </div>
+
+    <div class="section">
+      <h3>🧠 समानार्थी और विपरीतार्थी शब्द:</h3>
+      <p id="synonyms-antonyms">Loading...</p>
+    </div>
+
+    <button class="btn" onclick="goBack()">🔁 पुनः प्रयास करें</button>
+  </div>
+
+  <script>
+    const original = localStorage.getItem("hindiOriginal") || "";
+    const typed = localStorage.getItem("hindiTyped") || "";
+
+    document.getElementById("typed").innerText = typed || "कोई टेक्स्ट उपलब्ध नहीं।";
+
+    // Basic grammar check simulation
+    function checkGrammar(original, typed) {
+      const mistakes = [];
+      const originalWords = original.split(" ");
+      const typedWords = typed.split(" ");
+
+      for (let i = 0; i < originalWords.length; i++) {
+        if (typedWords[i] !== originalWords[i]) {
+          mistakes.push(`"${typedWords[i] || '____'}" → सही: "${originalWords[i]}"`);
+        }
+      }
+
+      return mistakes.length > 0 ? mistakes.join(", ") : "कोई त्रुटि नहीं मिली ✅";
+    }
+
+    function translateToEnglish(hindi) {
+      // Simple fixed example (AI/Backend se aayega future me)
+      return "Ram went to school, studied well and scored good marks. Education is an important part of life.";
+    }
+
+    function getSynAnto(hindi) {
+      return `
+        <strong>शब्द:</strong> शिक्षा<br/>
+        <strong>समानार्थी:</strong> विद्या, ज्ञान<br/>
+        <strong>विपरीतार्थी:</strong> अज्ञान, मूर्खता
+      `;
+    }
+
+    document.getElementById("grammar-mistakes").innerHTML = checkGrammar(original, typed);
+    document.getElementById("translation").innerText = translateToEnglish(original);
+    document.getElementById("synonyms-antonyms").innerHTML = getSynAnto(original);
+
+    function goBack() {
+      window.location.href = "grammar-checker.html";
+    }
+  </script>
+
+</body>
+</html>

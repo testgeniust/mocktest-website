@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Instructions</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f1f1f1;
+      font-family: Arial, sans-serif;
+    }
+    .instruction-box {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    .instruction-box h2 {
+      margin-bottom: 10px;
+    }
+    .language-toggle {
+      float: right;
+    }
+    .lang-content {
+      display: none;
+    }
+    .lang-content.active {
+      display: block;
+    }
+    .btn-start {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-start:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="instruction-box">
+    <div class="language-toggle">
+      <label><input type="radio" name="lang" value="english" checked /> English</label>
+      <label style="margin-left: 20px;"><input type="radio" name="lang" value="hindi" /> हिन्दी</label>
+    </div>
+
+    <div id="english" class="lang-content active">
+      <h2>📄 Instructions</h2>
+      <ul>
+        <li>Total duration of the test is 60 minutes.</li>
+        <li>Each question carries 2 marks. 0.50 marks will be deducted for each wrong answer.</li>
+        <li>Use "Next", "Previous", "Mark for Review" to navigate questions.</li>
+        <li>You can change your answers before submitting the test.</li>
+        <li>Use the question palette to jump to any question directly.</li>
+        <li>Once submitted, the test cannot be reattempted.</li>
+      </ul>
+    </div>
+
+    <div id="hindi" class="lang-content">
+      <h2>📄 निर्देश</h2>
+      <ul>
+        <li>परीक्षा की कुल अवधि 60 मिनट है।</li>
+        <li>प्रत्येक प्रश्न के लिए 2 अंक निर्धारित हैं। गलत उत्तर के लिए 0.50 अंक कटेंगे।</li>
+        <li>"Next", "Previous", "Mark for Review" का उपयोग करके प्रश्नों के बीच जाएं।</li>
+        <li>टेस्ट जमा करने से पहले उत्तरों को बदला जा सकता है।</li>
+        <li>किसी भी प्रश्न पर सीधे जाने के लिए प्रश्न पैलेट का उपयोग करें।</li>
+        <li>एक बार टेस्ट सबमिट करने के बाद, उसे दोबारा नहीं दिया जा सकता।</li>
+      </ul>
+    </div>
+
+    <button class="btn-start" onclick="startTest()">I am ready to begin / मैं तैयार हूँ शुरू करने के लिए</button>
+  </div>
+
+  <script>
+    const radios = document.querySelectorAll('input[name="lang"]');
+    radios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        document.querySelectorAll('.lang-content').forEach(div => div.classList.remove("active"));
+        document.getElementById(radio.value).classList.add("active");
+      });
+    });
+
+    function startTest() {
+      window.location.href = "mock-test.html";
+    }
+  </script>
+</body>
+</html>

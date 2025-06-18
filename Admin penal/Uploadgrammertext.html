@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Grammar Hindi Text | Admin</title>
+  <link rel="stylesheet" href="css/admin-style.css" />
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success {
+      margin-top: 15px;
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🧠 Upload Grammar Hindi Text</h2>
+
+    <label for="grammarText">Enter Hindi Sentence:</label>
+    <textarea id="grammarText" placeholder="उदाहरण: मेरे को किताब पढ़ना है..."></textarea>
+
+    <button onclick="uploadGrammarText()">📤 Upload Grammar Text</button>
+
+    <p class="success" id="msg"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { firebaseConfig } from "../firebase/firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function uploadGrammarText() {
+      const text = document.getElementById("grammarText").value.trim();
+      const msg = document.getElementById("msg");
+
+      if (!text) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ कृपया हिंदी वाक्य दर्ज करें।";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "grammar_texts"), {
+          hindi_text: text,
+          timestamp: new Date()
+        });
+
+        msg.style.color = "green";
+        msg.innerText = "✅ हिंदी वाक्य सफलतापूर्वक अपलोड हो गया!";
+        document.getElementById("grammarText").value = "";
+      } catch (err) {
+        console.error("Upload Error:", err);
+        msg.style.color = "red";
+        msg.innerText = "❌ अपलोड में त्रुटि हुई। पुनः प्रयास करें।";
+      }
+    }
+  </script>
+
+</body>
+</html>

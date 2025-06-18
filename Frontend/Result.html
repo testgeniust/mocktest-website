@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Result</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .result-box {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .question-block {
+      margin-bottom: 25px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 6px;
+    }
+    .correct {
+      color: green;
+    }
+    .wrong {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📊 Your Mock Test Result</h1>
+  </header>
+
+  <main class="result-box">
+    <p><strong>Total Questions:</strong> <span id="total-qn">0</span></p>
+    <p><strong>Attempted:</strong> <span id="attempted">0</span></p>
+    <p><strong>Correct:</strong> <span id="correct">0</span></p>
+    <p><strong>Wrong:</strong> <span id="wrong">0</span></p>
+    <p><strong>Score:</strong> <span id="score">0</span></p>
+
+    <hr />
+
+    <h2>📚 Solutions:</h2>
+    <div id="solution-container"></div>
+  </main>
+
+  <script>
+    const questions = JSON.parse(localStorage.getItem("mockTestResponses")) || [];
+    let attempted = 0, correct = 0, wrong = 0;
+
+    const container = document.getElementById("solution-container");
+
+    questions.forEach((q, i) => {
+      if (q.selected) attempted++;
+      if (q.selected === q.answer) correct++;
+      else if (q.selected && q.selected !== q.answer) wrong++;
+
+      const block = document.createElement("div");
+      block.className = "question-block";
+
+      block.innerHTML = `
+        <p><strong>Q${q.id}:</strong> ${q.question}</p>
+        <ul>
+          ${Object.entries(q.options).map(([key, value]) => {
+            let style = '';
+            if (key === q.answer) style = 'class="correct"';
+            if (q.selected === key && q.selected !== q.answer) style = 'class="wrong"';
+            return `<li ${style}>${key}: ${value}</li>`;
+          }).join("")}
+        </ul>
+        <p><strong>Your Answer:</strong> ${q.selected || 'Not Answered'}</p>
+        <p><strong>Correct Answer:</strong> ${q.answer}</p>
+      `;
+
+      container.appendChild(block);
+    });
+
+    // Show stats
+    document.getElementById("total-qn").innerText = questions.length;
+    document.getElementById("attempted").innerText = attempted;
+    document.getElementById("correct").innerText = correct;
+    document.getElementById("wrong").innerText = wrong;
+    document.getElementById("score").innerText = `${correct * 2} / ${questions.length * 2}`;
+  </script>
+</body>
+</html>

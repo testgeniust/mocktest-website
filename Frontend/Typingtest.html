@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Typing Test</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .typing-text {
+      background: #eef6ff;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>⌨️ Daily English Typing Test</h2>
+
+    <div class="typing-text" id="typing-text">
+      The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet. Practice typing it accurately and quickly for better results.
+    </div>
+
+    <textarea id="user-input" placeholder="Start typing here..."></textarea>
+
+    <button onclick="submitTyping()">Submit</button>
+  </div>
+
+  <script>
+    function submitTyping() {
+      const originalText = document.getElementById('typing-text').innerText.trim();
+      const userTyped = document.getElementById('user-input').value.trim();
+      localStorage.setItem("originalText", originalText);
+      localStorage.setItem("userTyped", userTyped);
+      window.location.href = "typing-result.html";
+    }
+  </script>
+
+</body>
+</html>

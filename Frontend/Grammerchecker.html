@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>व्याकरण जांचक</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f7f7f7;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .hindi-text {
+      font-size: 18px;
+      background: #f1f9ff;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      font-size: 16px;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 30px;
+      background-color: #0069d9;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004ba0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📘 हिंदी व्याकरण जांच</h2>
+
+    <div class="hindi-text" id="hindi-text">
+      राम ने स्कूल जाकर पढ़ाई की और अच्छे अंक प्राप्त किए। शिक्षा जीवन का महत्वपूर्ण हिस्सा होती है।
+    </div>
+
+    <textarea id="typed-hindi" placeholder="ऊपर दिए गए हिंदी वाक्य को यहाँ टाइप करें..."></textarea>
+
+    <button onclick="submitGrammar()">जमा करें</button>
+  </div>
+
+  <script>
+    function submitGrammar() {
+      const original = document.getElementById("hindi-text").innerText.trim();
+      const typed = document.getElementById("typed-hindi").value.trim();
+
+      localStorage.setItem("hindiOriginal", original);
+      localStorage.setItem("hindiTyped", typed);
+
+      window.location.href = "grammar-result.html";
+    }
+  </script>
+
+</body>
+</html>

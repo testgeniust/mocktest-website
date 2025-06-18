@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Vocabulary</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    .vocab-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .vocab-entry {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .word {
+      font-weight: bold;
+      color: #333;
+    }
+    .meaning {
+      color: #555;
+    }
+    .date-heading {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="vocab-container">
+    <h2>📘 Daily Vocabulary</h2>
+    <div class="date-heading" id="vocab-date">Date: --</div>
+    <div id="vocab-list">
+      <!-- Vocabulary list will load here -->
+    </div>
+  </div>
+
+  <script>
+    // Dummy vocabulary (replace with Firestore in real project)
+    const vocabData = {
+      date: "2025-06-16",
+      words: [
+        { word: "Ubiquitous", meaning: "हर जगह मौजूद" },
+        { word: "Lucid", meaning: "स्पष्ट / साफ" },
+        { word: "Resilient", meaning: "लचीला / मुश्किलों से उबरने वाला" },
+        { word: "Conundrum", meaning: "पहेली / जटिल समस्या" },
+        { word: "Euphoria", meaning: "अत्यधिक खुशी" },
+        { word: "Alleviate", meaning: "कम करना / राहत देना" },
+        { word: "Ambiguous", meaning: "अस्पष्ट / दो अर्थ वाला" },
+        { word: "Meticulous", meaning: "बहुत सावधानीपूर्वक" },
+        { word: "Fortify", meaning: "मजबूत बनाना" },
+        { word: "Pragmatic", meaning: "व्यावहारिक" }
+      ]
+    };
+
+    document.getElementById("vocab-date").textContent = "Date: " + vocabData.date;
+
+    const list = document.getElementById("vocab-list");
+    vocabData.words.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "vocab-entry";
+      div.innerHTML = `
+        <div class="word">${item.word}</div>
+        <div class="meaning">${item.meaning}</div>
+      `;
+      list.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>

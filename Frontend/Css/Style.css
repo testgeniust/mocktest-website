@@ -1,0 +1,105 @@
+/* Base Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f6fc;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  background-color: #003366;
+  color: white;
+  padding: 1rem 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+footer {
+  background-color: #eaeaea;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+/* Homepage Buttons */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.nav-button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+/* Forms */
+.login-form, .admin-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  margin: 2rem auto;
+  gap: 1rem;
+}
+
+.login-form input,
+.login-form button,
+.admin-form input,
+.admin-form textarea,
+.admin-form button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.login-form button,
+.admin-form button {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-form button:hover,
+.admin-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Mock Test Page */
+.question-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+}
+
+.options li {
+  margin: 0.5rem 0;
+}

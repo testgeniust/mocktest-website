@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Editorial</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+    .editorial-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .editorial-date {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #007bff;
+    }
+    .editorial-text {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+    .previous-edits {
+      margin-top: 30px;
+    }
+    .previous-edits h3 {
+      margin-bottom: 10px;
+    }
+    .edit-item {
+      margin-bottom: 15px;
+    }
+    .edit-item span {
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="editorial-container">
+    <h2>📰 Today's Editorial</h2>
+    <div id="latest-editorial">
+      <div class="editorial-date" id="today-date">Date: --</div>
+      <div class="editorial-text" id="today-editorial">Loading editorial...</div>
+    </div>
+
+    <div class="previous-edits">
+      <h3>📅 Previous 7 Days Editorials</h3>
+      <div id="previous-list">
+        <!-- Past editorials will load here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dummy editorial data (replace with Firestore in real project)
+    const editorials = [
+      {
+        date: "2025-06-16",
+        text: "Today’s editorial discusses the impact of global economic reforms on developing nations, emphasizing the importance of sustainable growth, education, and infrastructure."
+      },
+      {
+        date: "2025-06-15",
+        text: "India's monsoon policy needs better forecasting to support farmers and control inflation. Government must invest more in Agri-tech."
+      },
+      {
+        date: "2025-06-14",
+        text: "The role of youth in democratic movements worldwide has proven to be a force for transparency and accountability."
+      },
+      {
+        date: "2025-06-13",
+        text: "Digital education must focus on equity. Bridging the gap between urban and rural students is the key."
+      },
+      {
+        date: "2025-06-12",
+        text: "Climate change isn’t tomorrow’s problem. It's today’s reality, and global cooperation is not optional anymore."
+      },
+      {
+        date: "2025-06-11",
+        text: "India’s healthcare system needs reform in insurance accessibility, rural health support, and mental health awareness."
+      },
+      {
+        date: "2025-06-10",
+        text: "Civic sense and responsibility must be taught at schools for a cleaner and more conscious society."
+      }
+    ];
+
+    // Load today's editorial
+    document.getElementById("today-date").textContent = "Date: " + editorials[0].date;
+    document.getElementById("today-editorial").textContent = editorials[0].text;
+
+    // Load previous 6 days
+    const previous = document.getElementById("previous-list");
+    for (let i = 1; i < editorials.length; i++) {
+      const div = document.createElement("div");
+      div.className = "edit-item";
+      div.innerHTML = `
+        <div><span>${editorials[i].date}</span></div>
+        <div class="editorial-text">${editorials[i].text}</div>
+      `;
+      previous.appendChild(div);
+    }
+  </script>
+
+</body>
+</html>

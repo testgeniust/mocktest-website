@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Maths Questions</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: #f5f7fa;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .question-item {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+    .q-text {
+      font-weight: bold;
+      color: #333;
+    }
+    .options {
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+    .options div {
+      margin-bottom: 5px;
+    }
+    .date-heading {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📊 Daily 50 Maths Questions</h2>
+    <div class="date-heading" id="maths-date">Date: --</div>
+    <div id="maths-questions">
+      <!-- Questions will load here -->
+    </div>
+  </div>
+
+  <script>
+    // Dummy questions (replace with Firestore)
+    const mathsData = {
+      date: "2025-06-16",
+      questions: [
+        {
+          q: "If 2x + 3 = 11, then x = ?",
+          options: ["3", "4", "5", "6"],
+          answer: "4"
+        },
+        {
+          q: "What is the value of (15)^2?",
+          options: ["200", "215", "225", "230"],
+          answer: "225"
+        },
+        {
+          q: "A train 120m long is running at 54km/h. How long will it take to pass a pole?",
+          options: ["6 sec", "8 sec", "10 sec", "12 sec"],
+          answer: "8 sec"
+        }
+        // Total 50 questions ideally
+      ]
+    };
+
+    document.getElementById("maths-date").textContent = "Date: " + mathsData.date;
+
+    const container = document.getElementById("maths-questions");
+    mathsData.questions.forEach((item, i) => {
+      const div = document.createElement("div");
+      div.className = "question-item";
+      div.innerHTML = `
+        <div class="q-text">Q${i + 1}. ${item.q}</div>
+        <div class="options">
+          <div>A. ${item.options[0]}</div>
+          <div>B. ${item.options[1]}</div>
+          <div>C. ${item.options[2]}</div>
+          <div>D. ${item.options[3]}</div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>

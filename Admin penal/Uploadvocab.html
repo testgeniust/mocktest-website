@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Vocabulary | Admin</title>
+  <link rel="stylesheet" href="css/admin-style.css" />
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 80px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success {
+      margin-top: 15px;
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📗 Upload Daily Vocabulary</h2>
+
+    <label for="word">Word:</label>
+    <input type="text" id="word" placeholder="e.g., Prolific" />
+
+    <label for="meaning">Meaning (Hindi or English):</label>
+    <textarea id="meaning" placeholder="Enter meaning here..."></textarea>
+
+    <label for="example">Example Sentence:</label>
+    <textarea id="example" placeholder="Enter example here..."></textarea>
+
+    <button onclick="uploadVocab()">➕ Upload Word</button>
+
+    <p class="success" id="msg"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { firebaseConfig } from "../firebase/firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function uploadVocab() {
+      const word = document.getElementById("word").value.trim();
+      const meaning = document.getElementById("meaning").value.trim();
+      const example = document.getElementById("example").value.trim();
+      const msg = document.getElementById("msg");
+
+      if (!word || !meaning || !example) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ Please fill all fields.";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "vocabulary"), {
+          word,
+          meaning,
+          example,
+          timestamp: new Date()
+        });
+
+        msg.style.color = "green";
+        msg.innerText = "✅ Vocabulary uploaded successfully!";
+
+        document.getElementById("word").value = "";
+        document.getElementById("meaning").value = "";
+        document.getElementById("example").value = "";
+      } catch (err) {
+        console.error("Error uploading vocab:", err);
+        msg.style.color = "red";
+        msg.innerText = "❌ Error uploading. Try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>
